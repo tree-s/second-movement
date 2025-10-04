@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2023 Bernd Plontsch
+ * Copyright (c) 2022 Shogo Okamoto
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,33 +22,42 @@
  * SOFTWARE.
  */
 
-#ifndef BREATHING_FACE_H_
-#define BREATHING_FACE_H_
+#ifndef COUNTER_FACE_H_
+#define COUNTER_FACE_H_
 
 /*
- * BOXED BREATHING face
+ * COUNTER face
  *
- * Breathing is a complication for guiding boxed breathing sessions.
- * Boxed breathing is a technique to help you stay calm and improve
- * concentration in stressful situations.
+ * Counter face is designed to count the number of running laps during exercises.
  *
- * Usage: Timed messages will cycle as long as this face is active.
- * Press ALARM to toggle sound.
+ * Usage:
+ * Short-press ALARM to increment the counter (loops at 99)
+ * Long-press ALARM to reset the counter.
+ * Long-press LIGHT to toggle sound.
  */
 
 #include "movement.h"
 
-void breathing_face_setup(uint8_t watch_face_index, void ** context_ptr);
-void breathing_face_activate(void *context);
-bool breathing_face_loop(movement_event_t event, void *context);
-void breathing_face_resign(void *context);
+typedef struct {
+    uint8_t counter_idx;
+    bool beep_on;
+} counter_state_t;
 
-#define breathing_face ((const watch_face_t){ \
-    breathing_face_setup, \
-    breathing_face_activate, \
-    breathing_face_loop, \
-    breathing_face_resign, \
+
+void counter_face_setup(uint8_t watch_face_index, void ** context_ptr);
+void counter_face_activate(void *context);
+bool counter_face_loop(movement_event_t event, void *context);
+void counter_face_resign(void *context);
+
+void print_counter(counter_state_t *state);
+void beep_counter(counter_state_t *state);
+
+#define counter_face ((const watch_face_t){ \
+    counter_face_setup, \
+    counter_face_activate, \
+    counter_face_loop, \
+    counter_face_resign, \
     NULL, \
 })
 
-#endif // BREATHING_FACE_H_
+#endif // COUNTER_FACE_H_

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2024 Ruben Nic
+ * Copyright (c) 2025 Joey Castillo
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,41 +22,36 @@
  * SOFTWARE.
  */
 
-#ifndef CLOSE_ENOUGH_CLOCK_FACE_H_
-#define CLOSE_ENOUGH_CLOCK_FACE_H_
-
-/*
- * CLOSE ENOUGH CLOCK FACE
- *
- * Displays the current time; but only in periods of 5.
- * Just in the in the formats of:
- * - "10 past 5"
- * - "15 to 7"
- * - "6 o'clock"
- *
- */
+#pragma once
 
 #include "movement.h"
 
+/*
+ * Kè (Decimal Time)
+ *
+ * This watch face is an optional replacement for the standard Clock face.
+ * Like the standard Clock face, it displays the time and weekday at the top,
+ * but the main line shows the percentage of the day that has passed, with midnight
+ * represented by 0% and 11:59 PM as 99.9%.
+ *
+ * Name comes from here: https://en.wikipedia.org/wiki/Traditional_Chinese_timekeeping#One-hundredth_of_a_day:_kè
+ *
+ */
+
 typedef struct {
-    int prev_five_minute_period;
-    int prev_min_checked;
-    uint8_t last_battery_check;
-    bool battery_low;
-    bool alarm_enabled;
-} close_enough_clock_state_t;
+    uint8_t previous_day;
+    uint32_t previous_time;
+} ke_decimal_time_state_t;
 
-void close_enough_clock_face_setup(uint8_t watch_face_index, void ** context_ptr);
-void close_enough_clock_face_activate(void *context);
-bool close_enough_clock_face_loop(movement_event_t event, void *context);
-void close_enough_clock_face_resign(void *context);
+void ke_decimal_time_face_setup(uint8_t watch_face_index, void ** context_ptr);
+void ke_decimal_time_face_activate(void *context);
+bool ke_decimal_time_face_loop(movement_event_t event, void *context);
+void ke_decimal_time_face_resign(void *context);
 
-#define close_enough_clock_face ((const watch_face_t){ \
-    close_enough_clock_face_setup, \
-    close_enough_clock_face_activate, \
-    close_enough_clock_face_loop, \
-    close_enough_clock_face_resign, \
+#define ke_decimal_time_face ((const watch_face_t){ \
+    ke_decimal_time_face_setup, \
+    ke_decimal_time_face_activate, \
+    ke_decimal_time_face_loop, \
+    ke_decimal_time_face_resign, \
     NULL, \
 })
-
-#endif // CLOSE_ENOUGH_CLOCK_FACE_H_
