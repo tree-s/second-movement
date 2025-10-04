@@ -117,6 +117,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_watch_rtc_is_enabled
 <tr class="memitem:ga8035abf642b311ee58a6a144f79e675c" id="r_ga8035abf642b311ee58a6a144f79e675c"><td class="memItemLeft" align="right" valign="top">rtc_date_time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8035abf642b311ee58a6a144f79e675c">watch_rtc_get_date_time</a> (void)</td></tr>
 <tr class="memdesc:ga8035abf642b311ee58a6a144f79e675c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the date and time.  <br /></td></tr>
 <tr class="separator:ga8035abf642b311ee58a6a144f79e675c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga533c60672dc2346c0a614f84e58fa23e" id="r_ga533c60672dc2346c0a614f84e58fa23e"><td class="memItemLeft" align="right" valign="top">rtc_date_time_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga533c60672dc2346c0a614f84e58fa23e">watch_get_init_date_time</a> (void)</td></tr>
+<tr class="memdesc:ga533c60672dc2346c0a614f84e58fa23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the date and time that the watch defaults to when power cycled. Often comes from the Makefile flags.  <br /></td></tr>
+<tr class="separator:ga533c60672dc2346c0a614f84e58fa23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga69a8c28e3ecda6c01e206efb25e41714" id="r_ga69a8c28e3ecda6c01e206efb25e41714"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga69a8c28e3ecda6c01e206efb25e41714">watch_rtc_register_alarm_callback</a> (<a class="el" href="watch_8h.html#a50201253488c2d8732f3287f2a917383">watch_cb_t</a> callback, rtc_date_time_t alarm_time, rtc_alarm_match_t mask)</td></tr>
 <tr class="memdesc:ga69a8c28e3ecda6c01e206efb25e41714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Registers an alarm callback that will be called when the RTC time matches the target time, as masked by the provided mask.  <br /></td></tr>
 <tr class="separator:ga69a8c28e3ecda6c01e206efb25e41714"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,6 +172,26 @@ Variables</h2></td></tr>
 <p>This section covers functions related to the SAM L22's real-time clock peripheral, including date, time and alarm functions. </p>
 <p>The real-time clock is the only peripheral that main.c enables for you. It is the cornerstone of low power operation on the watch, and it is required for several key functions that we assume will be available, namely waking on a press of the ALARM button. It is also required for the operation of the 1 Hz tick interrupt, which we use to wake from STANDBY mode. </p>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ga533c60672dc2346c0a614f84e58fa23e" name="ga533c60672dc2346c0a614f84e58fa23e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga533c60672dc2346c0a614f84e58fa23e">&#9670;&#160;</a></span>watch_get_init_date_time()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">rtc_date_time_t watch_get_init_date_time </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the date and time that the watch defaults to when power cycled. Often comes from the Makefile flags. </p>
+<dl class="section return"><dt>Returns</dt><dd>A rtc_date_time_t with the current date and time, with a year value from 0-63 representing 2020-2083. </dd></dl>
+
+</div>
+</div>
 <a id="gadccd826da474b5fe24cac8d8edc88ae6" name="gadccd826da474b5fe24cac8d8edc88ae6"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#gadccd826da474b5fe24cac8d8edc88ae6">&#9670;&#160;</a></span>watch_rtc_disable_matching_periodic_callbacks()</h2>
 
