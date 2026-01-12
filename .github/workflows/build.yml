@@ -11,9 +11,6 @@ jobs:
     strategy:
       matrix:
         board:
-          - "sensorwatch_red"
-          - "sensorwatch_green"
-          - "sensorwatch_blue"
           - "sensorwatch_pro"
         display:
           - "classic"
@@ -43,9 +40,6 @@ jobs:
     strategy:
       matrix:
         board:
-          - "sensorwatch_red"
-          - "sensorwatch_green"
-          - "sensorwatch_blue"
           - "sensorwatch_pro"
         display:
           - "classic"
