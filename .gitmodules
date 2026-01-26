@@ -10,4 +10,3 @@
 [submodule "utz"]
 	path = utz
 	url = https://github.com/tree-s/utz.git
-	branch = main
