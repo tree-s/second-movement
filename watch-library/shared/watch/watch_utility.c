@@ -25,6 +25,7 @@
 #include <math.h>
 #include <string.h>
 #include "watch_utility.h"
+#include "utz.h"
 #include "zones.h"
 
 const char * watch_utility_get_weekday(watch_date_time_t date_time) {
