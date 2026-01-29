@@ -337,70 +337,13 @@ uint8_t watch_utility_days_in_month(uint8_t month, uint16_t year) {
     return days;
 }
 
-char _scratch_timezone[7] = {0};
-
 char *watch_utility_time_zone_name_at_index(int32_t tzindex) {
-    char *zone_in_rom = ((char *)zone_names + 8 * tzindex);
+    const char *zone_name = get_index((const char *)zone_names, (uint8_t)tzindex);
 
+    // Classic LCD can read directly from ROM
     if (watch_get_lcd_type() != WATCH_LCD_TYPE_CUSTOM) {
-        // classic LCD can get a pointer to ROM
-        return zone_in_rom;
-    } else {
-        // otherwise handle tweaks for custom LCD
-        strncpy(_scratch_timezone, zone_in_rom, 7);
-
-        // D, B and T can all be displayed in position 1
-        if (_scratch_timezone[0] == 'D') _scratch_timezone[0] = 'd';
-        if (_scratch_timezone[0] == 'B') _scratch_timezone[0] = 'b';
-        if (_scratch_timezone[0] == '+') _scratch_timezone[0] = 't';
-
-        // Fake M had to be lowercase before; now can be uppercase.
-        if (_scratch_timezone[0] == 'n' && _scratch_timezone[1] == '&') {
-            _scratch_timezone[0] = 'N';
-            _scratch_timezone[1] = '7';
-        }
-
-        // Other edgier cases:
-        switch (tzindex) {
-            case 8: // New York
-                strncpy(_scratch_timezone, "NuYork", 7);
-                break;
-            case 13: // St John's
-                _scratch_timezone[2] = 'J';
-                _scratch_timezone[3] = 'o';
-                _scratch_timezone[4] = 'h';
-                _scratch_timezone[5] = 'n';
-                break;
-            case 15: // UTC
-                strncpy(_scratch_timezone, " UTC  ", 7);
-                break;
-            case 16: // London
-                strncpy(_scratch_timezone, "London", 7);
-                break;
-            case 17: // Lagos
-                strncpy(_scratch_timezone, "Lagos ", 7);
-                break;
-            case 24: // Riyadh
-                strncpy(_scratch_timezone, "Riyadh", 7);
-                break;
-            case 25: // Moscow
-                _scratch_timezone[4] = 'O';
-                _scratch_timezone[5] = 'W';
-                break;
-            case 30: // Yangon / Burma
-                strncpy(_scratch_timezone, " burma", 7);
-                break;
-            case 41: // Hobart
-                strncpy(_scratch_timezone, "Hobart", 7);
-                break;
-            case 42: // Sydney
-                _scratch_timezone[2] = 'd';
-                break;
-            case 43: // Guam
-                _scratch_timezone[4] = 'M';
-                _scratch_timezone[5] = ' ';
-                break;
-        }
+        return (char *)zone_name;
     }
-    return _scratch_timezone;
+
+    return (char *)zone_name;
 }
