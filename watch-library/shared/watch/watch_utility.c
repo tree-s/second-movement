@@ -340,14 +340,25 @@ uint8_t watch_utility_days_in_month(uint8_t month, uint16_t year) {
 char _scratch_timezone[7] = {0};
 
 char *watch_utility_time_zone_name_at_index(int32_t tzindex) {
-    const char *zone_name = get_index((const char *)zone_names, (uint8_t)tzindex);
+    char *zone_in_rom = ((char *)zone_names + 8 * tzindex);
 
-    // Classic LCD can read directly from ROM
     if (watch_get_lcd_type() != WATCH_LCD_TYPE_CUSTOM) {
-        return (char *)zone_name;
+        // classic LCD can get a pointer to ROM
+        return zone_in_rom;
+    } else {
+        // otherwise handle tweaks for custom LCD
+        strncpy(_scratch_timezone, zone_in_rom, 7);
+
+        // D, B and T can all be displayed in position 1
+        if (_scratch_timezone[0] == 'D') _scratch_timezone[0] = 'd';
+        if (_scratch_timezone[0] == 'B') _scratch_timezone[0] = 'b';
+        if (_scratch_timezone[0] == '+') _scratch_timezone[0] = 't';
+
+        // Fake M had to be lowercase before; now can be uppercase.
+        if (_scratch_timezone[0] == 'n' && _scratch_timezone[1] == '&') {
+            _scratch_timezone[0] = 'N';
+            _scratch_timezone[1] = '7';
+        }
     }
-
-    strncpy(_scratch_timezone, zone_name, 7);
-
     return _scratch_timezone;
 }
