@@ -347,7 +347,7 @@ char *watch_utility_time_zone_name_at_index(int32_t tzindex) {
         return (char *)zone_name;
     }
 
-    strncpy(_scratch_timezone, zone_in_rom, 7);
+    strncpy(_scratch_timezone, zone_name, 7);
 
     return _scratch_timezone;
 }
