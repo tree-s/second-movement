@@ -337,6 +337,8 @@ uint8_t watch_utility_days_in_month(uint8_t month, uint16_t year) {
     return days;
 }
 
+char _scratch_timezone[7] = {0};
+
 char *watch_utility_time_zone_name_at_index(int32_t tzindex) {
     const char *zone_name = get_index((const char *)zone_names, (uint8_t)tzindex);
 
@@ -345,5 +347,7 @@ char *watch_utility_time_zone_name_at_index(int32_t tzindex) {
         return (char *)zone_name;
     }
 
-    return (char *)zone_name;
+    ustrncpy(_scratch_timezone, zone_name, 7);
+
+    return _scratch_timezone;
 }
